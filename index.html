@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script> <!-- Add defer to load JS after HTML -->
+    <title>GRC Profile Generator</title>
+</head>
+<body>
+    <header>
+        <h1>GRC Profile Generator</h1>
+    </header>
+    <main>
+        <!-- Input Form -->
+        <section id="profile-form-section">
+            <h2>Fill in Your Details</h2>
+            <form id="profile-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                
+                <label for="skills">Skills:</label>
+                <textarea id="skills" placeholder="List your skills"></textarea>
+                
+                <button type="button" id="save-btn">Save Profile</button>
+            </form>
+        </section>
+
+        <!-- Profile Preview -->
+        <section id="profile-preview-section">
+            <h2>Profile Preview</h2>
+            <div id="profile-preview">
+                <!-- Profile content will be dynamically added here -->
+            </div>
+            <button type="button" id="export-btn">Export as PDF</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 GRC Profile Generator</p>
+    </footer>
+</body>
+</html>
