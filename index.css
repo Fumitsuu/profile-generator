@@ -11,81 +11,35 @@ body {
 /* Header */
 header {
     background-color: #4CAF50;
-    color: #fff;
+    color: white;
     text-align: center;
     padding: 1.5rem 1rem;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 
 /* Main Content */
 main {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    padding: 1rem;
 }
 
-/* Card Container */
+/* Section Styles */
 section {
-    background: #fff;
-    border-radius: 12px;
+    background: white;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    border: 1px solid #eaeaea;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-section h2 {
-    font-size: 1.8rem;
-    color: #333;
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
-    border-bottom: 3px solid #4CAF50;
-    display: inline-block;
 }
 
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-label {
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 0.5rem;
-}
-
-input, textarea, select {
-    width: 100%;
-    padding: 0.8rem;
+/* Profile Preview */
+#profile-preview {
     border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fdfdfd;
-    font-size: 1rem;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-
-input:focus, textarea:focus, select:focus {
-    border: 1px solid #4CAF50;
-    outline: none;
+    padding: 1.5rem;
+    border-radius: 10px;
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
-}
-
-textarea {
-    resize: none;
-    height: 120px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Buttons */
@@ -93,74 +47,12 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #45a049;
-    transform: translateY(-2px);
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Profile Preview */
-#profile-preview {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    border: 1px solid #eaeaea;
-    color: #555;
-    font-size: 1rem;
-    margin-top: 1rem;
-    line-height: 1.6;
-}
-
-/* Template Selector */
-#template-selector {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-#template-selector label {
-    font-weight: 600;
-    color: #555;
-}
-
-#template-selector select {
-    padding: 0.6rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-}
-
-/* GrapesJS Editor Section */
-#editor {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-    padding: 1rem;
-    margin-top: 1rem;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    background-color: #4CAF50;
-    color: white;
-    padding: 1rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 }
