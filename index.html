@@ -9,28 +9,80 @@
     <title>GRC Profile Generator</title>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <h1>GRC Profile Generator</h1>
+        <div class="container">
+            <h1 class="main-title">GRC Profile Generator</h1>
+            <p class="tagline">Simplify profile generation with ease and efficiency</p>
+        </div>
     </header>
-    <main>
-        <!-- Search Candidate -->
-        <section id="google-sheet-fetch">
-            <h2>Search Candidate</h2>
-            <input type="text" id="candidate-name" placeholder="Enter Candidate's First Name" aria-label="Candidate Name">
-            <button id="fetch-data-btn">Fetch Data</button>
-        </section>
 
-        <!-- Profile Preview -->
-        <section id="profile-preview-section">
-            <h2>Profile Preview</h2>
-            <div id="profile-preview">
-                <!-- Profile content will be dynamically added here -->
-            </div>
-            <button type="button" id="export-btn">Export as PDF</button>
-        </section>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Search Candidate Section -->
+            <section id="google-sheet-fetch" aria-labelledby="search-candidate-heading">
+                <h2 id="search-candidate-heading">Search Candidate</h2>
+                <form id="search-form" aria-label="Candidate Search Form">
+                    <label for="candidate-name" class="form-label">Enter Candidate's First Name:</label>
+                    <input 
+                        type="text" 
+                        id="candidate-name" 
+                        name="candidate-name" 
+                        placeholder="e.g., John" 
+                        aria-required="true" 
+                        class="input-field"
+                    >
+                    <button type="button" id="fetch-data-btn" class="btn btn-primary">
+                        Fetch Data
+                    </button>
+                </form>
+            </section>
+
+            <!-- Profile Preview Section -->
+            <section id="profile-preview-section" aria-labelledby="profile-preview-heading">
+                <h2 id="profile-preview-heading">Profile Preview</h2>
+                
+                <!-- Style Selection -->
+                <div class="style-selector">
+                    <label for="style-select" class="form-label">Choose Profile Style:</label>
+                    <select id="style-select" class="input-field">
+                        <option value="modern" selected>Modern</option>
+                        <option value="classic">Classic</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+
+                <!-- Profile Preview Container -->
+                <div id="profile-preview" class="profile-container">
+                    <!-- Dynamic profile content will be injected here -->
+                    <p class="placeholder-text">Profile details will appear here after fetching data.</p>
+                </div>
+                
+                <button 
+                    type="button" 
+                    id="export-btn" 
+                    class="btn btn-secondary"
+                    disabled
+                    aria-disabled="true"
+                >
+                    Export as PDF
+                </button>
+            </section>
+        </div>
     </main>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 GRC Profile Generator</p>
+        <div class="container">
+            <p>&copy; 2025 GRC Profile Generator. All rights reserved.</p>
+            <nav aria-label="Footer navigation">
+                <ul class="footer-links">
+                    <li><a href="#" aria-label="Terms of Service">Terms of Service</a></li>
+                    <li><a href="#" aria-label="Privacy Policy">Privacy Policy</a></li>
+                </ul>
+            </nav>
+        </div>
     </footer>
 </body>
 </html>
