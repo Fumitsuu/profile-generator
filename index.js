@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('export-btn');
     const profilePreview = document.getElementById('profile-preview');
     const templateSelector = document.getElementById('template');
+    const fetchDataBtn = document.getElementById('fetch-data-btn');
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtJF1jCrrgVAj3z1xEZyaIcLf9H0PJQTF9kjuTF9iiZ7PXvtuZ5x1h91DsiXFBiIjoYqKDOoeXYMlp/pub?output=csv'; // CSV link for Google Sheet
 
     // Initialize GrapesJS
     const editor = grapesjs.init({
@@ -25,22 +27,36 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
     });
 
-    // Save and Render Profile
-    saveBtn.addEventListener('click', () => {
-        const profileData = {
-            name: document.getElementById('name').value,
-            age: document.getElementById('age').value,
-            address: document.getElementById('address').value,
-            contact: document.getElementById('contact').value,
-            education: document.getElementById('education').value,
-            experience: document.getElementById('experience').value,
-            skills: document.getElementById('skills').value,
-            hobbies: document.getElementById('hobbies').value,
-            certifications: document.getElementById('certifications').value,
-            references: document.getElementById('references').value,
-        };
+    // Fetch and Load Data from Google Sheet
+    fetchDataBtn?.addEventListener('click', () => {
+        const candidateName = document.getElementById('candidate-name').value.trim();
+        if (!candidateName) {
+            alert('Please enter a name');
+            return;
+        }
 
-        renderProfile(profileData);
+        fetch(sheetUrl)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n').map(row => row.split(','));
+                const headers = rows[0].map(header => header.trim());
+                const candidateRow = rows.find(row => row[headers.indexOf('FirstName')]?.trim() === candidateName);
+
+                if (!candidateRow) {
+                    alert('Candidate not found!');
+                    return;
+                }
+
+                // Map row data to profile fields
+                const profileData = {};
+                headers.forEach((header, index) => {
+                    profileData[header] = candidateRow[index]?.trim() || 'N/A';
+                });
+
+                loadGrapesEditorContent(profileData);
+                renderProfile(profileData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
     });
 
     // Render Profile Preview
@@ -49,22 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let profileHTML = `
             <div class="profile-card">
-                <h3>${data.name}</h3>
-                <p><strong>Age:</strong> ${data.age}</p>
-                <p><strong>Address:</strong> ${data.address}</p>
-                <p><strong>Contact:</strong> ${data.contact}</p>
-                <h4>Education</h4>
-                <p>${data.education}</p>
-                <h4>Work Experience</h4>
-                <p>${data.experience}</p>
-                <h4>Skills</h4>
-                <p>${data.skills}</p>
-                <h4>Hobbies</h4>
-                <p>${data.hobbies}</p>
-                <h4>Certifications</h4>
-                <p>${data.certifications}</p>
-                <h4>References</h4>
-                <p>${data.references}</p>
+                <h3>${data.FirstName} ${data.LastName}</h3>
+                <p><strong>Preferred Pronoun:</strong> ${data.PreferedPronoun}</p>
+                <p><strong>Title:</strong> ${data.Title}</p>
+                <p><strong>Email:</strong> ${data.EmailID}</p>
+                <p><strong>Phone:</strong> ${data.Phone}</p>
+                <p><strong>Current City:</strong> ${data.CurrentCity}</p>
+                <p><strong>Experience:</strong> ${data.Experience}</p>
             </div>
         `;
 
@@ -77,15 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
         profilePreview.innerHTML = profileHTML;
     }
 
-    // Synchronize GrapesJS Content with Preview
-    document.getElementById('template').addEventListener('change', () => {
-        const html = editor.getHtml();
-        const css = editor.getCss();
-        profilePreview.innerHTML = `
-            <style>${css}</style>
-            ${html}
+    // Dynamically Update GrapesJS Editor
+    function loadGrapesEditorContent(profileData) {
+        const templateContent = `
+            <div class="profile-template">
+                <h1>${profileData.FirstName || 'Your Name'}</h1>
+                <p><strong>Preferred Pronoun:</strong> ${profileData.PreferedPronoun || 'N/A'}</p>
+                <p><strong>Title:</strong> ${profileData.Title || 'N/A'}</p>
+                <p><strong>Email:</strong> ${profileData.EmailID || 'N/A'}</p>
+                <p><strong>Current City:</strong> ${profileData.CurrentCity || 'N/A'}</p>
+                <h2>Experience</h2>
+                <p>${profileData.Experience || 'Your Experience'}</p>
+            </div>
         `;
-    });
+
+        editor.setComponents(templateContent);
+    }
 
     // Export as PDF
     exportBtn.addEventListener('click', () => {
@@ -99,31 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
         html2pdf().set(options).from(profilePreview).save();
     });
 
-    // Dynamically Update GrapesJS Editor
-    function loadGrapesEditorContent(profileData) {
-        const templateContent = `
-            <div class="profile-template">
-                <h1>${profileData.name || 'Your Name'}</h1>
-                <p><strong>Age:</strong> ${profileData.age || 'Your Age'}</p>
-                <p><strong>Address:</strong> ${profileData.address || 'Your Address'}</p>
-                <p><strong>Contact:</strong> ${profileData.contact || 'Your Contact Info'}</p>
-                <h2>Education</h2>
-                <p>${profileData.education || 'Your Education Details'}</p>
-                <h2>Experience</h2>
-                <p>${profileData.experience || 'Your Work Experience'}</p>
-            </div>
-        `;
-
-        editor.setComponents(templateContent);
-    }
-
-    // Load Initial Profile Data into GrapesJS
-    loadGrapesEditorContent({
-        name: 'John Doe',
-        age: 30,
-        address: '123 Main St, Springfield',
-        contact: '+123456789',
-        education: 'B.Sc. in Computer Science, XYZ University',
-        experience: 'Software Engineer at ABC Corp',
+    // Save Edited Template
+    saveBtn.addEventListener('click', () => {
+        const html = editor.getHtml();
+        const css = editor.getCss();
+        console.log('Generated HTML:', html);
+        console.log('Generated CSS:', css);
+        alert('Template saved! Check console for details.');
     });
 });

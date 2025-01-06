@@ -15,52 +15,11 @@
         <h1>GRC Profile Generator</h1>
     </header>
     <main>
-        <!-- Input Form -->
-        <section id="profile-form-section">
-            <h2>Fill in Your Details</h2>
-            <form id="profile-form">
-                <!-- Personal Information -->
-                <h3>Personal Information</h3>
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter your name" required>
-
-                <label for="age">Age:</label>
-                <input type="number" id="age" placeholder="Enter your age">
-
-                <label for="address">Address:</label>
-                <input type="text" id="address" placeholder="Enter your address">
-
-                <label for="contact">Contact Info:</label>
-                <input type="tel" id="contact" placeholder="Enter your contact number">
-
-                <!-- Education -->
-                <h3>Education</h3>
-                <label for="education">Degrees and Institutions:</label>
-                <textarea id="education" placeholder="e.g., B.Sc. in Computer Science, XYZ University"></textarea>
-
-                <!-- Work Experience -->
-                <h3>Work Experience</h3>
-                <label for="experience">Companies, Roles, Tenures, Achievements:</label>
-                <textarea id="experience" placeholder="e.g., Software Engineer at ABC Corp (2015-2020), developed XYZ system"></textarea>
-
-                <!-- Skills -->
-                <h3>Skills</h3>
-                <label for="skills">Technical, Soft Skills, Languages:</label>
-                <textarea id="skills" placeholder="e.g., JavaScript, Teamwork, Spanish"></textarea>
-
-                <!-- Additional Sections -->
-                <h3>Additional Information</h3>
-                <label for="hobbies">Hobbies:</label>
-                <textarea id="hobbies" placeholder="e.g., Reading, Hiking, Painting"></textarea>
-
-                <label for="certifications">Certifications:</label>
-                <textarea id="certifications" placeholder="e.g., AWS Certified Solutions Architect"></textarea>
-
-                <label for="references">References:</label>
-                <textarea id="references" placeholder="e.g., John Doe, Manager at ABC Corp, johndoe@example.com"></textarea>
-
-                <button type="button" id="save-btn">Save Profile</button>
-            </form>
+        <!-- Google Sheet Fetch -->
+        <section id="google-sheet-fetch">
+            <h2>Search Candidate</h2>
+            <input type="text" id="candidate-name" placeholder="Enter Candidate's First Name">
+            <button id="fetch-data-btn">Fetch Data</button>
         </section>
 
         <!-- GrapesJS Editor -->
@@ -72,14 +31,6 @@
         <!-- Profile Preview -->
         <section id="profile-preview-section">
             <h2>Profile Preview</h2>
-            <div id="template-selector">
-                <label for="template">Choose Template:</label>
-                <select id="template">
-                    <option value="modern">Modern</option>
-                    <option value="classic">Classic</option>
-                    <option value="minimal">Minimal</option>
-                </select>
-            </div>
             <div id="profile-preview">
                 <!-- Profile content will be dynamically added here -->
             </div>
@@ -110,14 +61,58 @@
             `,
         });
 
-        // Export Edited Template as HTML
-        document.getElementById('save-btn').addEventListener('click', () => {
-            const html = editor.getHtml();
-            const css = editor.getCss();
-            console.log('Generated HTML:', html);
-            console.log('Generated CSS:', css);
-            alert('Template saved! Check console for details.');
+        // Fetch and Render Data from Google Sheet
+        const fetchDataBtn = document.getElementById('fetch-data-btn');
+        const profilePreview = document.getElementById('profile-preview');
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtJF1jCrrgVAj3z1xEZyaIcLf9H0PJQTF9kjuTF9iiZ7PXvtuZ5x1h91DsiXFBiIjoYqKDOoeXYMlp/pub?output=csv';
+
+        fetchDataBtn.addEventListener('click', () => {
+            const candidateName = document.getElementById('candidate-name').value.trim();
+            if (!candidateName) {
+                alert('Please enter a name');
+                return;
+            }
+
+            fetch(sheetUrl)
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n').map(row => row.split(','));
+                    const headers = rows[0].map(header => header.trim());
+                    const candidateRow = rows.find(row => row[headers.indexOf('FirstName')]?.trim() === candidateName);
+
+                    if (!candidateRow) {
+                        alert('Candidate not found!');
+                        return;
+                    }
+
+                    // Create profile data object
+                    const profileData = {};
+                    headers.forEach((header, index) => {
+                        profileData[header] = candidateRow[index]?.trim() || 'N/A';
+                    });
+
+                    renderProfile(profileData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
         });
+
+        // Render Profile
+        function renderProfile(data) {
+            profilePreview.innerHTML = `
+                <h3>${data.FirstName} ${data.LastName}</h3>
+                <p><strong>Preferred Pronoun:</strong> ${data.PreferedPronoun}</p>
+                <p><strong>Title:</strong> ${data.Title}</p>
+                <p><strong>Email:</strong> ${data.EmailID}</p>
+                <p><strong>Phone:</strong> ${data.Phone}</p>
+                <p><strong>Current City:</strong> ${data.CurrentCity}</p>
+                <p><strong>Current Country:</strong> ${data.CurrentCountry}</p>
+                <p><strong>Experience:</strong> ${data.Experience}</p>
+                <p><strong>Position Sought:</strong> ${data.PositionSought}</p>
+                <p><strong>Website:</strong> <a href="${data.Website}" target="_blank">${data.Website}</a></p>
+                <p><strong>Social Media:</strong> <a href="${data.SocialMedia}" target="_blank">${data.SocialMedia}</a></p>
+                <p><strong>Vaccination Status:</strong> ${data.Vaccination}</p>
+            `;
+        }
     </script>
 </body>
 </html>
