@@ -1,88 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-    <script src="index.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-    <title>GRC Profile Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  
+  <!-- Link to your CSS -->
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Link to your JavaScript (deferred to ensure DOM is loaded first) -->
+  <script src="index.js" defer></script>
+  
+  <!-- html2pdf Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  
+  <title>GRC Profile Generator</title>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <h1 class="main-title">GRC Profile Generator</h1>
-            <p class="tagline">Simplify profile generation with ease and efficiency</p>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <h1 class="main-title">GRC Profile Generator</h1>
+      <p class="tagline">Simplify profile generation with ease and efficiency</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      
+      <!-- Registration Prompt -->
+      <section id="registration-prompt" aria-labelledby="registration-prompt-heading">
+        <h2 id="registration-prompt-heading">Welcome to GRC Profile Generator</h2>
+        <p>Are you a registered GRC candidate?</p>
+        <button id="registered-btn" class="btn btn-primary">Yes, I am registered</button>
+        <button id="new-candidate-btn" class="btn btn-secondary">No, I am new</button>
+      </section>
+
+      <!-- Registered Candidate Section -->
+      <!-- Removed inline style="display: none" and replaced with class="hidden" -->
+      <section id="registered-section" class="hidden" aria-labelledby="registered-heading">
+        <h2 id="registered-heading">Registered Candidate</h2>
+        <form id="registered-form" aria-label="Registered Candidate Form">
+          <label for="candidate-email" class="form-label">Enter your email:</label>
+          <input 
+            type="email" 
+            id="candidate-email" 
+            name="candidate-email" 
+            placeholder="e.g., john.doe@example.com" 
+            aria-required="true" 
+            class="input-field"
+          >
+          <button type="submit" class="btn btn-primary">
+            Fetch Profile
+          </button>
+        </form>
+      </section>
+
+      <section id="new-candidate-section" class="hidden" aria-labelledby="new-candidate-heading">
+        <h2 id="new-candidate-heading">New Candidate Registration</h2>
+        <form id="new-candidate-form" aria-label="New Candidate Form">
+          <table>
+            <tbody>
+              <tr>
+                <th><label for="Code">Code</label></th>
+                <td><input type="text" name="Code" id="Code" placeholder="Code"></td>
+              </tr>
+              <tr>
+                <th><label for="Title">Title</label></th>
+                <td><input type="text" name="Title" id="Title" placeholder="Title"></td>
+              </tr>
+              <tr>
+                <th><label for="PreferedPronoun">Preferred Pronoun</label></th>
+                <td><input type="text" name="PreferedPronoun" id="PreferedPronoun" placeholder="Preferred Pronoun"></td>
+              </tr>
+              <tr>
+                <th><label for="FirstName">First Name</label></th>
+                <td><input type="text" name="FirstName" id="FirstName" placeholder="First Name"></td>
+              </tr>
+              <tr>
+                <th><label for="LastName">Last Name</label></th>
+                <td><input type="text" name="LastName" id="LastName" placeholder="Last Name"></td>
+              </tr>
+              <tr>
+                <th><label for="Password">Password</label></th>
+                <td><input type="password" name="Password" id="Password" placeholder="Password"></td>
+              </tr>
+              <tr>
+                <th><label for="EmailID">Email ID</label></th>
+                <td><input type="email" name="EmailID" id="EmailID" placeholder="Email ID"></td>
+              </tr>
+              <tr>
+                <th><label for="Phone">Phone</label></th>
+                <td><input type="text" name="Phone" id="Phone" placeholder="Phone"></td>
+              </tr>
+              <tr>
+                <th><label for="Skype">Skype</label></th>
+                <td><input type="text" name="Skype" id="Skype" placeholder="Skype"></td>
+              </tr>
+              <tr>
+                <th><label for="VirtualMeeting">Virtual Meeting</label></th>
+                <td><input type="url" name="VirtualMeeting" id="VirtualMeeting" placeholder="https://example.com/meeting"></td>
+              </tr>
+              <tr>
+                <th><label for="School">School</label></th>
+                <td><input type="text" name="School" id="School" placeholder="School"></td>
+              </tr>
+              <tr>
+                <th><label for="CurrentCity">Current City</label></th>
+                <td><input type="text" name="CurrentCity" id="CurrentCity" placeholder="Current City"></td>
+              </tr>
+              <tr>
+                <th><label for="CurrentCountry">Current Country</label></th>
+                <td><input type="text" name="CurrentCountry" id="CurrentCountry" placeholder="Current Country"></td>
+              </tr>
+              <tr>
+                <th><label for="CurrentCountryCode">Current Country Code</label></th>
+                <td><input type="text" name="CurrentCountryCode" id="CurrentCountryCode" placeholder="+1, +44, etc."></td>
+              </tr>
+              <tr>
+                <th><label for="Website">Website</label></th>
+                <td><input type="url" name="Website" id="Website" placeholder="https://example.com"></td>
+              </tr>
+              <tr>
+                <th><label for="SocialMedia">Social Media</label></th>
+                <td><input type="url" name="SocialMedia" id="SocialMedia" placeholder="https://linkedin.com/in/..."></td>
+              </tr>
+              <tr>
+                <th><label for="Video_lnk">Video Link</label></th>
+                <td><input type="url" name="Video_lnk" id="Video_lnk" placeholder="https://youtube.com/..."></td>
+              </tr>
+              <tr>
+                <th><label for="SpouseEmail">Spouse Email</label></th>
+                <td><input type="email" name="SpouseEmail" id="SpouseEmail" placeholder="Spouse Email"></td>
+              </tr>
+              <tr>
+                <th><label for="Dependants">Dependants</label></th>
+                <td><input type="text" name="Dependants" id="Dependants" placeholder="0, 1, 2..."></td>
+              </tr>
+              <tr>
+                <th><label for="Experience">Experience</label></th>
+                <td><input type="text" name="Experience" id="Experience" placeholder="Number of years, etc."></td>
+              </tr>
+              <tr>
+                <th><label for="DOB">DOB</label></th>
+                <td><input type="date" name="DOB" id="DOB"></td>
+              </tr>
+              <tr>
+                <th><label for="Spouse">Spouse</label></th>
+                <td><input type="text" name="Spouse" id="Spouse" placeholder="Spouse Name"></td>
+              </tr>
+              <tr>
+                <th><label for="NoActive">No Active</label></th>
+                <td><input type="text" name="NoActive" id="NoActive" placeholder="Active/Inactive"></td>
+              </tr>
+              <tr>
+                <th><label for="AlumniSchool">Alumni School</label></th>
+                <td><input type="text" name="AlumniSchool" id="AlumniSchool" placeholder="Alumni School"></td>
+              </tr>
+              <tr>
+                <th><label for="OldEmailID">Old Email ID</label></th>
+                <td><input type="email" name="OldEmailID" id="OldEmailID" placeholder="Old Email (if any)"></td>
+              </tr>
+              <tr>
+                <th><label for="PositionSought">Position Sought</label></th>
+                <td><input type="text" name="PositionSought" id="PositionSought" placeholder="Job Title"></td>
+              </tr>
+              <tr>
+                <th><label for="SocialMedia1">Social Media 1</label></th>
+                <td><input type="url" name="SocialMedia1" id="SocialMedia1" placeholder="https://..."></td>
+              </tr>
+              <tr>
+                <th><label for="SocialMedia2">Social Media 2</label></th>
+                <td><input type="url" name="SocialMedia2" id="SocialMedia2" placeholder="https://..."></td>
+              </tr>
+              <tr>
+                <th><label for="Display">Display</label></th>
+                <td><input type="text" name="Display" id="Display" placeholder="Public / Private"></td>
+              </tr>
+              <tr>
+                <th><label for="LastAccessDateTime">Last Access DateTime</label></th>
+                <td><input type="text" name="LastAccessDateTime" id="LastAccessDateTime" placeholder="YYYY-MM-DD HH:MM"></td>
+              </tr>
+              <tr>
+                <th><label for="LastNoticeDate">Last Notice Date</label></th>
+                <td><input type="text" name="LastNoticeDate" id="LastNoticeDate" placeholder="YYYY-MM-DD"></td>
+              </tr>
+              <tr>
+                <th><label for="EmailValidated">Email Validated</label></th>
+                <td><input type="text" name="EmailValidated" id="EmailValidated" placeholder="Yes / No"></td>
+              </tr>
+              <tr>
+                <th><label for="Citizenship">Citizenship</label></th>
+                <td><input type="text" name="Citizenship" id="Citizenship" placeholder="Country"></td>
+              </tr>
+              <tr>
+                <th><label for="PrimaryCitizenship">Primary Citizenship</label></th>
+                <td><input type="text" name="PrimaryCitizenship" id="PrimaryCitizenship" placeholder="Country"></td>
+              </tr>
+              <tr>
+                <th><label for="SecondaryCitizenship">Secondary Citizenship</label></th>
+                <td><input type="text" name="SecondaryCitizenship" id="SecondaryCitizenship" placeholder="Country"></td>
+              </tr>
+              <tr>
+                <th><label for="WorkTypeVirtual">Work Type (Virtual)</label></th>
+                <td><input type="text" name="WorkTypeVirtual" id="WorkTypeVirtual" placeholder="Full-Time / Part-Time"></td>
+              </tr>
+              <tr>
+                <th><label for="WorkTypeCampus">Work Type (Campus)</label></th>
+                <td><input type="text" name="WorkTypeCampus" id="WorkTypeCampus" placeholder="Full-Time / Part-Time"></td>
+              </tr>
+              <tr>
+                <th><label for="WorkTypeShort">Work Type (Short)</label></th>
+                <td><input type="text" name="WorkTypeShort" id="WorkTypeShort" placeholder="Short-Term / Contract"></td>
+              </tr>
+              <tr>
+                <th><label for="Vaccination">Vaccination</label></th>
+                <td><input type="text" name="Vaccination" id="Vaccination" placeholder="Fully / Partially / Not Vaccinated"></td>
+              </tr>
+              <tr>
+                <th><label for="CreatedDateTime">Created DateTime</label></th>
+                <td><input type="text" name="CreatedDateTime" id="CreatedDateTime" placeholder="YYYY-MM-DD HH:MM"></td>
+              </tr>
+              <tr>
+                <th><label for="ApprovedDateTime">Approved DateTime</label></th>
+                <td><input type="text" name="ApprovedDateTime" id="ApprovedDateTime" placeholder="YYYY-MM-DD HH:MM"></td>
+              </tr>
+            </tbody>
+          </table>
+      
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </section>
+
+      <!-- Profile Preview Section -->
+      <!-- Removed inline style="display: none" and replaced with class="hidden" -->
+      <section id="profile-preview-section" class="hidden" aria-labelledby="profile-preview-heading">
+        <h2 id="profile-preview-heading">Profile Preview</h2>
+
+        <!-- Style Selector -->
+        <label for="style-select" class="form-label">Choose Profile Style:</label>
+        <select id="style-select" class="input-field">
+          <option value="modern" selected>Modern</option>
+          <option value="classic">Classic</option>
+          <option value="minimal">Minimal</option>
+        </select>
+
+        <div id="profile-preview" class="profile-container">
+          <p class="placeholder-text">Profile details will appear here after fetching or creating data.</p>
         </div>
-    </header>
+        
+        <button 
+          type="button" 
+          id="export-btn" 
+          class="btn btn-secondary"
+          disabled
+          aria-disabled="true"
+        >
+          Export as PDF
+        </button>
+      </section>
+    </div>
+  </main>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <!-- Search Candidate Section -->
-            <section id="google-sheet-fetch" aria-labelledby="search-candidate-heading">
-                <h2 id="search-candidate-heading">Search Candidate</h2>
-                <form id="search-form" aria-label="Candidate Search Form">
-                    <label for="candidate-name" class="form-label">Enter Candidate's First Name:</label>
-                    <input 
-                        type="text" 
-                        id="candidate-name" 
-                        name="candidate-name" 
-                        placeholder="e.g., John" 
-                        aria-required="true" 
-                        class="input-field"
-                    >
-                    <button type="button" id="fetch-data-btn" class="btn btn-primary">
-                        Fetch Data
-                    </button>
-                </form>
-            </section>
-
-            <!-- Profile Preview Section -->
-            <section id="profile-preview-section" aria-labelledby="profile-preview-heading">
-                <h2 id="profile-preview-heading">Profile Preview</h2>
-                
-                <!-- Style Selection -->
-                <div class="style-selector">
-                    <label for="style-select" class="form-label">Choose Profile Style:</label>
-                    <select id="style-select" class="input-field">
-                        <option value="modern" selected>Modern</option>
-                        <option value="classic">Classic</option>
-                        <option value="minimal">Minimal</option>
-                    </select>
-                </div>
-
-                <!-- Profile Preview Container -->
-                <div id="profile-preview" class="profile-container">
-                    <!-- Dynamic profile content will be injected here -->
-                    <p class="placeholder-text">Profile details will appear here after fetching data.</p>
-                </div>
-                
-                <button 
-                    type="button" 
-                    id="export-btn" 
-                    class="btn btn-secondary"
-                    disabled
-                    aria-disabled="true"
-                >
-                    Export as PDF
-                </button>
-            </section>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 GRC Profile Generator. All rights reserved.</p>
-            <nav aria-label="Footer navigation">
-                <ul class="footer-links">
-                    <li><a href="#" aria-label="Terms of Service">Terms of Service</a></li>
-                    <li><a href="#" aria-label="Privacy Policy">Privacy Policy</a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 GRC Profile Generator. All rights reserved.</p>
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="#" aria-label="Terms of Service">Terms of Service</a></li>
+          <li><a href="#" aria-label="Privacy Policy">Privacy Policy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
